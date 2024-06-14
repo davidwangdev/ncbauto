@@ -1,31 +1,24 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "manage.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "fileprocessor/static/**/*",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/fileprocessor/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "manage.py"
-    }
-  ],
-  "env": {
-    "DJANGO_SECRET_KEY": "@django-secret-key"
-  },
-  "build": {
-    "env": {
-      "DJANGO_SECRET_KEY": "@django-secret-key"
-    }
+    "version": 2,
+    "builds": [
+      {
+        "src": "manage.py",
+        "use": "@vercel/python"
+      },
+      {
+        "src": "fileprocessor/static/**/*",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "/fileprocessor/static/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/manage.py"
+      }
+    ]
   }
-}
+  
