@@ -177,6 +177,39 @@ def handle_surgeries(file):
             original_count, total_bags = count
             ws.append([last_name, original_count, total_bags, '1mg Epinephrine in NS 3000ml irrigation'])
             continue
+        if(last_name == "FERGUSON"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, '500,000 unit Polymyxin, Ancef 1gram, Gent 80mg in NS 1 liter IRRIGATION'])
+            continue
+        if(last_name == "GARCIA"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, '1,000,000 units Polymyxin in NS 3000ml irrigation bag'])
+            continue
+        if(last_name == "KAISER"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, '1,000,000 units Polymyxin in NS 3000ml irrigation bag'])
+            continue
+        if(last_name == "KREINES"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, '1mg Epinephrine in NS 3000ml irrigation bag'])
+            continue
+        if(last_name == "LYNCH"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, '1mg EPI in NS 3000ml irrigation bag x 4 bags each case (NOT SPINE)'])
+            continue
+        if(last_name == "NILSSON"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, '1mg Epinephrine in NS 3000ml irrigation bag'])
+            continue
+        if(last_name == "SWANN"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, 'Heparin 30,000 unit in 1000ml NS for Cell Saver'])
+            continue
+        if(last_name == "VIROSLAV"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, '1,000,000 units Polymyxin in NS 3000ml irrigation bag'])
+            continue
+        
         original_count, total_bags = count
         ws.append([last_name, original_count, total_bags])
 
