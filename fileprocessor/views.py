@@ -126,34 +126,36 @@ def handle_surgeries(file):
     else:
         raise ValueError("Unsupported file format. Only CSV and XLS/XLSX are supported.")
 
+    df_unique = df.drop_duplicates(subset=['EVENT_ID'])
+
     surgeon_names = [
         "BURGESS MD, MEGAN", "CYR MD, STEVEN", "DEBERARDINO MD, THOMAS", 
         "FERGUSON MD, EARL", "GARCIA MD, FRANCISCO", "KAISER MD, BRYAN", 
         "KREINES DO, ALEXANDER", "LYNCH MD, JAMIE", "NILSSON MD, JOEL", 
-        "SWANN MD, MATTHEW", "VIROSLAV MD, SERGIO"
+        "SWANN MD, MATTHEW", "VIROSLAV MD, SERGIO", "DANIEL MD, DAVID"
     ]
 
     multiply_by_4 = ["DEBERARDINO", "KREINES", "NILSSON", "LYNCH"]
 
     # Count occurrences of each surgeon in dataframe
     surgeon_count = {}
+    CABG_count = df_unique['PROC_TEXT'].str.contains('CABG', case=False, na=False).sum()
+    TAVR_count = df_unique['PROC_TEXT'].str.contains('TAVR', case=False, na=False).sum()
+
     for surgeon_name in surgeon_names:
-        last_name = surgeon_name.split(' ')[0]  # Get last name
-        count = df[df['SURGEON'].str.contains(surgeon_name, na=False)].shape[0]
+        last_name = surgeon_name.split(' ')[0]
+        count = df_unique[df_unique['SURGEON'].str.contains(surgeon_name, na=False)].shape[0]
         total_bags = count * 4 if last_name in multiply_by_4 else count
         surgeon_count[last_name] = (count, total_bags)
-
-    print(surgeon_count)
 
     # Write results to Excel file
     wb = Workbook()
     ws = wb.active
-    ws.title = "Surgeon Counts"
+    ws.title = "Surgery Summary"
 
     # Styling definitions
     header_fill = PatternFill(start_color="9BC2E6", end_color="9BC2E6", fill_type="solid")
     font = Font(bold=True, color="000000")
-    alignment_header = Alignment(horizontal="center")
 
     # Write headers
     ws.append(['Surgeon Last Name', 'Count', 'Total Bags', 'Bag Name'])
@@ -161,7 +163,6 @@ def handle_surgeries(file):
     for cell in header_row:
         cell.fill = header_fill
         cell.font = font
-        cell.alignment = alignment_header
 
     # Write data
     for last_name, count in surgeon_count.items():
@@ -170,6 +171,10 @@ def handle_surgeries(file):
             ws.append([last_name, original_count, total_bags, 'Tumescent Solution – NS 1000ml + TXA 1gm + Lidocaine 1% 50ml + Epi 1ml. Profile but wait for request to mix due to low stability.'])
             continue
         if(last_name == "CYR"):
+            original_count, total_bags = count
+            ws.append([last_name, original_count, total_bags, 'Heparin 30,000 unit in 1000ml NS for Cell Saver.'])
+            continue
+        if(last_name == "DANIEL" ):
             original_count, total_bags = count
             ws.append([last_name, original_count, total_bags, 'Heparin 30,000 unit in 1000ml NS for Cell Saver.'])
             continue
@@ -212,6 +217,9 @@ def handle_surgeries(file):
         
         original_count, total_bags = count
         ws.append([last_name, original_count, total_bags])
+
+    ws.append(["CABG Cases This Week: ", CABG_count])
+    ws.append(["TAVR Cases This Week: ", TAVR_count])
 
     # Auto adjust column width
     for col in ws.columns:
