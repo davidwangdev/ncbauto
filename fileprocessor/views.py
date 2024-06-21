@@ -255,7 +255,7 @@ def handle_surgeries(file):
 
     ws.append(["Surgeon Last Name", "Breast Cases Count", "Total Bags", "Bag Name"])
 
-    header_row2 = ws[15]
+    header_row2 = ws[14]
     for cell in header_row2:
         cell.fill = header_fill
         cell.font = font
