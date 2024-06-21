@@ -57,7 +57,7 @@ def handle_charges(file):
     sheets = ['CIV', 'RESOLUTE', 'SLB', 'MTB', 'NEB', 'NCB', 'BMC']
     all_data = [aggregate_sum]
 
-    # Process each sheet and calculate sum per 'SUB GL'
+    # Process each sheet and calculate sum per subgroup
     for sheet in sheets:
         df_sheet = pd.read_excel(file, sheet_name=sheet)
         df_sheet['SUB GL'] = 'SUB GL ' + df_sheet['SUB GL'].astype(str)
@@ -177,7 +177,9 @@ def handle_surgeries(file):
             last_name = surgeon.split(" ")[0]
             breast_count[last_name] += 1
             seen_id.add(event_id)
-
+    
+    for index, row in breast_df.iterrows():
+        print(index, row)
 
     # Count CABG and TAVR cases for the week
     CABG_count = df_unique['PROC_TEXT'].str.contains('CABG', case=False, na=False).sum()
@@ -269,12 +271,12 @@ def handle_surgeries(file):
         if(surgeon == "WHIPPLE"):
             ws.append([surgeon, count, total_bags, "PRMA solutions: Papaverine 120mg in NS 100ml and Heparin 20,000 unit in NS 500mL."])
 
-    ws.append([])
+    ws.append([]) # Creates empty row
 
-    ws.append(["CABG Cases This Week: ", CABG_count])
-    ws.append(["TAVR Cases This Week: ", TAVR_count])
+    ws.append(["CABG Cases This Week: ", CABG_count]) # CABG output
+    ws.append(["TAVR Cases This Week: ", TAVR_count]) # TAVR output
 
-    # Auto adjust column width
+    # Auto-adjust column width
     for col in ws.columns:
         max_length = 0
         for cell in col:
