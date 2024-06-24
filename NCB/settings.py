@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0kqsow0fn4abjw=ei5lb8kzlo^(5#+u#iv7t7qdb*u&sxsf0=1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'ncbauto.onrender.com', '.vercel.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'ncbauto.onrender.com', '.vercel.app', 'ncbauto.vercel.app']
 
 # Application definition
 
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'NCB.wsgi.app'
+WSGI_APPLICATION = 'NCB.wsgi.application'
 
 
 # Database
